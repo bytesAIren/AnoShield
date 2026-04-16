@@ -181,7 +181,7 @@ AnonShield is a set of static files. Deploy to GitHub Pages, Netlify, Vercel, or
 
 | Category | Examples | Method |
 |----------|----------|--------|
-| **Person Names** 🇮🇹 | Mario Rossi, COSTA Pier Luigi | Dictionary (600+ first names, 400+ surnames) |
+| **Person Names** 🇮🇹 | Mario Rossi | Dictionary (600+ first names, 400+ surnames) |
 | **Addresses** 🇮🇹 | Via Roma 15, Piazza Garibaldi 3 | Regex pattern (Italian street prefixes) |
 | **Email Addresses** | user@example.com | Regex |
 | **Phone Numbers** | +39 333 1234567, (555) 123-4567 | Regex (international formats) |
