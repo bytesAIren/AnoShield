@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="data:image/svg+xml,%3Csvg%20width%3D%2264%22%20height%3D%2264%22%20viewBox%3D%220%200%2032%2032%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M16%202L4%208v8c0%207.73%205.12%2014.96%2012%2016.73C22.88%2030.96%2028%2023.73%2028%2016V8L16%202z%22%20fill%3D%22%2322d3ee%22%20opacity%3D%220.3%22%20stroke%3D%22%2322d3ee%22%20stroke-width%3D%221.5%22%2F%3E%3Cpath%20d%3D%22M13%2016l2%202%204-4%22%20stroke%3D%22%2322d3ee%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%20fill%3D%22none%22%2F%3E%3C%2Fsvg%3E" alt="AnonShield Logo" width="80" height="80">
-</p>
-
 <h1 align="center">AnonShield</h1>
 
 <p align="center">
@@ -185,7 +181,7 @@ AnonShield is a set of static files. Deploy to GitHub Pages, Netlify, Vercel, or
 
 | Category | Examples | Method |
 |----------|----------|--------|
-| **Person Names** 🇮🇹 | Mario Rossi, COSTA Pier Luigi | Dictionary (600+ first names, 400+ surnames) |
+| **Person Names** 🇮🇹 | Mario Rossi | Dictionary (600+ first names, 400+ surnames) |
 | **Addresses** 🇮🇹 | Via Roma 15, Piazza Garibaldi 3 | Regex pattern (Italian street prefixes) |
 | **Email Addresses** | user@example.com | Regex |
 | **Phone Numbers** | +39 333 1234567, (555) 123-4567 | Regex (international formats) |
