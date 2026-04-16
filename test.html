@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head><title>PII Detector Test</title></head>
+<body>
+<pre id="output">Running tests...</pre>
+<script src="js/pii-detector.js"></script>
+<script>
+const detector = new Anonymizer.PIIDetector();
+const results = [];
+
+// Test 1: Italian names
+const test1 = "COSTA Pier Luigi Giov e Mariarosa Carta";
+const det1 = detector.detect(test1);
+results.push("=== TEST 1: Italian Names ===");
+results.push("Input: " + test1);
+det1.forEach(d => results.push("  " + d.type + ": '" + d.value + "'"));
+
+// Test 2: Italian address
+const test2 = "VIA A. DE GASPERI, 20";
+const det2 = detector.detect(test2);
+results.push("\n=== TEST 2: Italian Address ===");
+results.push("Input: " + test2);
+det2.forEach(d => results.push("  " + d.type + ": '" + d.value + "'"));
+
+// Test 3: Combined - the exact text from user's document
+const test3 = "COSTA Pier Luigi Giov e Mariarosa Carta residenti in VIA A. DE GASPERI, 20";
+const res3 = detector.redactText(test3, {style: 'blackbar'});
+results.push("\n=== TEST 3: Full Redaction ===");
+results.push("Input:    " + test3);
+results.push("Redacted: " + res3.redactedText);
+results.push("Count:    " + res3.detections.length + " detections");
+res3.detections.forEach(d => results.push("  " + d.type + ": '" + d.value + "'"));
+
+// Test 4: More names and addresses
+const test4 = "Mario Rossi abita in Piazza Garibaldi, 15 e lavora con Luigi Bianchi";
+const res4 = detector.redactText(test4, {style: 'redacted'});
+results.push("\n=== TEST 4: Additional Names + Address ===");
+results.push("Input:    " + test4);
+results.push("Redacted: " + res4.redactedText);
+res4.detections.forEach(d => results.push("  " + d.type + ": '" + d.value + "'"));
+
+document.getElementById('output').textContent = results.join('\n');
+</script>
+</body>
+</html>

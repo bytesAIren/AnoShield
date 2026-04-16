@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AnonShield — Secure File Anonymizer</title>
+    <meta name="description" content="Securely anonymize PDF, Word, Excel, and text files directly in your browser. No uploads, no servers — your data stays on your machine.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="index.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛡️</text></svg>">
+</head>
+<body>
+
+    <!-- ═══════════════════════════════════════ HEADER ═══════════════════════════════════════ -->
+    <header id="app-header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                        <defs>
+                            <linearGradient id="shield-grad" x1="0" y1="0" x2="32" y2="32">
+                                <stop offset="0%" stop-color="#22d3ee"/>
+                                <stop offset="100%" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                        <path d="M16 2L4 8v8c0 7.73 5.12 14.96 12 16.73C22.88 30.96 28 23.73 28 16V8L16 2z" 
+                              fill="url(#shield-grad)" opacity="0.2" stroke="url(#shield-grad)" stroke-width="1.5"/>
+                        <path d="M13 16l2 2 4-4" stroke="url(#shield-grad)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
+                <h1>AnonShield</h1>
+            </div>
+            <p class="tagline">Secure file anonymization — <strong>100% in your browser</strong></p>
+        </div>
+    </header>
+
+    <!-- ═══════════════════════════════════════ MAIN ═══════════════════════════════════════ -->
+    <main id="app-main">
+
+        <!-- ─────── Settings Sidebar ─────── -->
+        <aside id="settings-panel" class="glass-panel">
+            <div class="panel-header">
+                <h2>
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                    </svg>
+                    Settings
+                </h2>
+                <button id="toggle-settings" class="icon-btn" title="Toggle settings panel">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="settings-body">
+                <!-- Redaction Style -->
+                <div class="setting-group">
+                    <label class="setting-label">Redaction Style</label>
+                    <select id="redaction-style">
+                        <option value="blackbar">████ Black Bars</option>
+                        <option value="redacted">[REDACTED]</option>
+                        <option value="custom">Custom Text…</option>
+                        <option value="remove">Remove (blank)</option>
+                    </select>
+                    <input type="text" id="custom-redaction-text" class="hidden" placeholder="Enter replacement text…">
+                </div>
+
+                <!-- PII Categories -->
+                <div class="setting-group">
+                    <label class="setting-label">PII Categories to Detect</label>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label"><input type="checkbox" data-pii="email" checked><span class="check-mark"></span>Email Addresses</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="phone" checked><span class="check-mark"></span>Phone Numbers</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="ssn" checked><span class="check-mark"></span>SSN / Tax IDs</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="codiceFiscale" checked><span class="check-mark"></span>Codice Fiscale</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="iban" checked><span class="check-mark"></span>IBAN</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="creditCard" checked><span class="check-mark"></span>Credit Cards</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="date" checked><span class="check-mark"></span>Dates</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="ip" checked><span class="check-mark"></span>IP Addresses</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="url" checked><span class="check-mark"></span>URLs</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="postalCode" checked><span class="check-mark"></span>Postal / ZIP Codes</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="personName" checked><span class="check-mark"></span>Person Names (IT)</label>
+                        <label class="checkbox-label"><input type="checkbox" data-pii="address" checked><span class="check-mark"></span>Addresses</label>
+                    </div>
+                </div>
+
+                <!-- Custom Words -->
+                <div class="setting-group">
+                    <label class="setting-label">Custom Words / Names</label>
+                    <textarea id="custom-words" rows="4" placeholder="One word or phrase per line…&#10;e.g.&#10;Mario Rossi&#10;Acme Corp"></textarea>
+                    <p class="setting-hint">These words will always be redacted, regardless of PII category.</p>
+                </div>
+
+                <!-- PDF Quality -->
+                <div class="setting-group">
+                    <label class="setting-label">PDF Output Quality</label>
+                    <select id="pdf-dpi">
+                        <option value="150">150 DPI (faster, smaller)</option>
+                        <option value="200">200 DPI (balanced)</option>
+                        <option value="300" selected>300 DPI (best quality)</option>
+                    </select>
+                </div>
+            </div>
+        </aside>
+
+        <!-- ─────── Content Area ─────── -->
+        <div id="content-area">
+
+            <!-- Drop Zone -->
+            <div id="drop-zone" class="glass-panel">
+                <div class="drop-zone-inner">
+                    <div class="drop-icon-wrapper">
+                        <div class="drop-icon-bg"></div>
+                        <svg class="drop-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                            <polyline points="14 2 14 8 20 8"/>
+                            <line x1="12" y1="18" x2="12" y2="12"/>
+                            <polyline points="9 15 12 12 15 15"/>
+                        </svg>
+                    </div>
+                    <h2 class="drop-title">Drop your files here</h2>
+                    <p class="drop-subtitle">or <button id="browse-btn" class="link-btn">browse to select</button></p>
+                    <div class="supported-formats">
+                        <span class="format-badge">PDF</span>
+                        <span class="format-badge">DOCX</span>
+                        <span class="format-badge">XLSX</span>
+                        <span class="format-badge">TXT</span>
+                        <span class="format-badge">CSV</span>
+                    </div>
+                </div>
+                <input type="file" id="file-input" multiple accept=".pdf,.docx,.xlsx,.xls,.txt,.csv" hidden>
+            </div>
+
+            <!-- File Queue -->
+            <div id="file-queue" class="hidden">
+                <div class="section-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
+                            <polyline points="13 2 13 9 20 9"/>
+                        </svg>
+                        Files to Anonymize
+                        <span id="file-count" class="count-badge">0</span>
+                    </h2>
+                    <div class="section-actions">
+                        <button id="btn-add-more" class="btn btn-ghost">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                            Add More
+                        </button>
+                        <button id="btn-clear-all" class="btn btn-ghost btn-danger-ghost">
+                            Clear All
+                        </button>
+                        <button id="btn-process-all" class="btn btn-primary">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                            </svg>
+                            Anonymize All
+                        </button>
+                    </div>
+                </div>
+                <div id="file-list"></div>
+            </div>
+
+            <!-- Results Area -->
+            <div id="results-area" class="hidden">
+                <div class="section-header">
+                    <h2>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                            <polyline points="22 4 12 14.01 9 11.01"/>
+                        </svg>
+                        Results
+                    </h2>
+                    <div class="section-actions">
+                        <button id="btn-new-session" class="btn btn-ghost">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg>
+                            Start Over
+                        </button>
+                    </div>
+                </div>
+                <div id="results-list"></div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ═══════════════════════════════════════ FOOTER ══════════════════════════════════════ -->
+    <footer id="app-footer">
+        <div class="footer-content">
+            <div class="security-badge">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+                <span>All processing happens <strong>locally in your browser</strong>. No data is ever uploaded or sent to any server.</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ═══════════════════════════════ PROCESSING OVERLAY ═════════════════════════════════ -->
+    <div id="processing-overlay" class="hidden">
+        <div class="overlay-backdrop"></div>
+        <div class="processing-modal glass-panel">
+            <div class="processing-icon">
+                <div class="spinner">
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                    <div class="spinner-ring"></div>
+                </div>
+            </div>
+            <h3 id="processing-title">Processing Files…</h3>
+            <p id="processing-status">Initializing…</p>
+            <div class="progress-track">
+                <div id="progress-bar" class="progress-fill" style="width: 0%"></div>
+            </div>
+            <p id="processing-detail" class="processing-detail">Preparing…</p>
+        </div>
+    </div>
+
+    <!-- ═══════════════════════════════ SCAN MODAL ═════════════════════════════════ -->
+    <div id="scan-modal" class="hidden">
+        <div class="overlay-backdrop" data-close-modal></div>
+        <div class="scan-modal-content glass-panel">
+            <div class="modal-header">
+                <h3>Scan Results</h3>
+                <button class="icon-btn" data-close-modal>
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                </button>
+            </div>
+            <div id="scan-results-body" class="modal-body"></div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost" data-close-modal>Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════════════════ SCRIPTS ═════════════════════════════════════════ -->
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+    <!-- Application Modules -->
+    <script src="js/pii-detector.js"></script>
+    <script src="js/txt-processor.js"></script>
+    <script src="js/docx-processor.js"></script>
+    <script src="js/xlsx-processor.js"></script>
+    <script src="js/pdf-processor.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
