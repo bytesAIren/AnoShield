@@ -99,34 +99,39 @@ Use the tool instantly in your browser — no download needed:
 **[https://bytesairen.github.io/AnonShield/](https://bytesairen.github.io/AnonShield/)**
 
 ### Option 2: Download & Run Locally (Offline)
-For users who prefer to run AnonShield on their own machine or server, use the **offline version** bundled inside the `offline/` folder.
+
+For users who prefer to run AnonShield on their own machine or private server, a dedicated **offline version** is included in the `offline/` folder. It is identical to the online version but will **never show the GitHub star prompt**.
+
+> ⚠️ **Important**: The `offline/` folder references assets (`index.css`, `js/`) from the **project root** via relative paths (`../`). You must keep the entire project structure intact — do not move `offline/index.html` out of the folder.
+
+**Quick start (no server needed):**
 
 ```bash
-# Clone the repository
+# 1. Download the project (clone or download ZIP from GitHub)
 git clone https://github.com/bytesAIren/AnonShield.git
 cd AnonShield
 
-# Open the offline version directly in your browser
+# 2. Open the offline version in your browser
 start offline\index.html        # Windows
 open offline/index.html         # macOS / Linux
 ```
 
-Alternatively, serve it via a local HTTP server for the best experience:
+> 💡 Prefer a ZIP? Go to the GitHub repo → **Code → Download ZIP**, extract it, and open `offline/index.html` from inside the extracted folder.
+
+**Recommended: serve via local HTTP server** (avoids browser file:// restrictions with some PDF operations):
 
 ```bash
-# Python
+# Python (run from the project root)
 python -m http.server 3000
-# then open http://localhost:3000/offline/
+# → open http://localhost:3000/offline/
 
 # Node.js
 npx serve . -p 3000
-# then open http://localhost:3000/offline/
+# → open http://localhost:3000/offline/
 ```
 
-> ℹ️ The **offline** version is identical to the online version, except it will never show the GitHub star prompt. The CSS and JS files are shared from the project root — no duplication.
-
-### Option 3: Host on Any Static Server
-AnonShield is a set of static files. Deploy to GitHub Pages, Netlify, Vercel, or any web hosting — no backend required.
+### Option 3: Host on Your Own Server
+AnonShield is a set of static files. Upload the entire project to any web host (Nginx, Apache, GitHub Pages fork, Netlify, Vercel) — no backend required. Point users to `/offline/index.html` to avoid the GitHub star prompt on your own deployment.
 
 ---
 
