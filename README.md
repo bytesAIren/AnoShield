@@ -95,40 +95,37 @@ AnonShield is an essential tool for organizations and individuals needing strict
 ## Getting Started
 
 ### Option 1: Use Online (Easiest)
-You can use the tool directly from your browser without downloading anything. Just visit:
-**[https://bytesairen.github.io/AnonShield/index.html](https://bytesairen.github.io/AnonShield/index.html)**
+Use the tool instantly in your browser — no download needed:
+**[https://bytesairen.github.io/AnonShield/](https://bytesairen.github.io/AnonShield/)**
 
-### Option 2: Open Directly
-Simply open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari). No installation, no build process, no dependencies to install.
+### Option 2: Download & Run Locally (Offline)
+For users who prefer to run AnonShield on their own machine or server, use the **offline version** bundled inside the `offline/` folder.
 
 ```bash
 # Clone the repository
 git clone https://github.com/bytesAIren/AnonShield.git
+cd AnonShield
 
-# Open in browser
-open anonshield/index.html
-# or on Windows
-start anonshield/index.html
+# Open the offline version directly in your browser
+start offline\index.html        # Windows
+open offline/index.html         # macOS / Linux
 ```
 
-### Option 3: Local Server (Recommended)
-For the best experience, serve the files via a local HTTP server:
+Alternatively, serve it via a local HTTP server for the best experience:
 
 ```bash
-# Using Python
-cd anonshield
+# Python
 python -m http.server 3000
+# then open http://localhost:3000/offline/
 
-# Using Node.js
-npx serve anonshield -p 3000
-
-# Using PHP
-php -S localhost:3000 -t anonshield
+# Node.js
+npx serve . -p 3000
+# then open http://localhost:3000/offline/
 ```
 
-Then navigate to `http://localhost:3000` in your browser.
+> ℹ️ The **offline** version is identical to the online version, except it will never show the GitHub star prompt. The CSS and JS files are shared from the project root — no duplication.
 
-### Option 4: Host on Any Static Server
+### Option 3: Host on Any Static Server
 AnonShield is a set of static files. Deploy to GitHub Pages, Netlify, Vercel, or any web hosting — no backend required.
 
 ---
@@ -262,16 +259,20 @@ All libraries are loaded via CDN. No npm, no build tools, no server-side runtime
 
 ```
 anonshield/
-├── index.html              # Main application shell
-├── index.css               # Design system & styles (dark glassmorphism)
+├── index.html              # Online version — served via GitHub Pages (includes GitHub star prompt)
+├── index.css               # Design system & styles — shared by both versions
 ├── README.md               # This file
-├── js/
-│   ├── pii-detector.js     # PII detection engine (regex + Italian name dictionary)
-│   ├── pdf-processor.js    # PDF rasterization & text layer reconstruction
-│   ├── docx-processor.js   # Word document XML manipulation
-│   ├── xlsx-processor.js   # Excel cell-by-cell processing
-│   ├── txt-processor.js    # Plain text / CSV processing
-│   └── app.js              # Main application logic & UI management
+├── robots.txt              # Search engine directives
+├── sitemap.xml             # SEO sitemap
+├── offline/
+│   └── index.html          # Offline/local version — no star prompt, references ../css and ../js
+└── js/
+    ├── pii-detector.js     # PII detection engine (regex + Italian name dictionary)
+    ├── pdf-processor.js    # PDF rasterization & text layer reconstruction
+    ├── docx-processor.js   # Word document XML manipulation
+    ├── xlsx-processor.js   # Excel cell-by-cell processing
+    ├── txt-processor.js    # Plain text / CSV processing
+    └── app.js              # Main application logic & UI management
 ```
 
 ---

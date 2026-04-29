@@ -56,7 +56,13 @@ window.Anonymizer = window.Anonymizer || {};
         customWords: $('#custom-words'),
         pdfDpi: $('#pdf-dpi'),
         scanModal: $('#scan-modal'),
-        scanResultsBody: $('#scan-results-body')
+        scanResultsBody: $('#scan-results-body'),
+        // GitHub star modal (only present in online build)
+        githubStarModal: $('#github-star-modal'),
+        starModalClose: $('#star-modal-close'),
+        starModalSkip: $('#star-modal-skip'),
+        starModalBackdrop: $('#star-modal-backdrop'),
+        starGithubBtn: $('#star-github-btn')
     };
 
     // ─── Helpers ───
@@ -422,6 +428,11 @@ window.Anonymizer = window.Anonymizer || {};
         for (const entry of state.files) {
             dom.resultsList.appendChild(renderResultCard(entry));
         }
+
+        // Show GitHub star prompt only in the online version and only once per session
+        if (window.ANONSHIELD_ONLINE && !sessionStorage.getItem('anonshield_star_shown')) {
+            setTimeout(showStarModal, 900);
+        }
     }
 
     function downloadFile(fileId) {
@@ -433,6 +444,26 @@ window.Anonymizer = window.Anonymizer || {};
         const newName = `${baseName}_anonymized.${ext}`;
 
         saveAs(entry.blob, newName);
+    }
+
+    // ─── GitHub Star Modal ───
+
+    function showStarModal() {
+        if (!dom.githubStarModal) return;
+        sessionStorage.setItem('anonshield_star_shown', '1');
+        dom.githubStarModal.classList.remove('hidden');
+        // Re-trigger the CSS entry animation each time it opens
+        const content = dom.githubStarModal.querySelector('.star-modal-content');
+        if (content) {
+            content.style.animation = 'none';
+            content.offsetHeight; // reflow
+            content.style.animation = '';
+        }
+    }
+
+    function closeStarModal() {
+        if (!dom.githubStarModal) return;
+        dom.githubStarModal.classList.add('hidden');
     }
 
     // ─── Scan Detail Modal ───
@@ -591,10 +622,19 @@ window.Anonymizer = window.Anonymizer || {};
         el.addEventListener('click', closeScanModal);
     });
 
+    // GitHub star modal events (elements are null in the offline build — safe to skip)
+    if (dom.starModalClose)    dom.starModalClose.addEventListener('click', closeStarModal);
+    if (dom.starModalSkip)     dom.starModalSkip.addEventListener('click', closeStarModal);
+    if (dom.starModalBackdrop) dom.starModalBackdrop.addEventListener('click', closeStarModal);
+    if (dom.starGithubBtn) {
+        dom.starGithubBtn.addEventListener('click', () => setTimeout(closeStarModal, 300));
+    }
+
     // Keyboard: Escape closes modals
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeScanModal();
+            closeStarModal();
         }
     });
 
