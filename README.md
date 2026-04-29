@@ -99,7 +99,7 @@ Simply open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari). 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/anonshield.git
+git clone https://github.com/bytesAIren/AnonShield.git
 
 # Open in browser
 open anonshield/index.html
