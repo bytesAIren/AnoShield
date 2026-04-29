@@ -94,7 +94,11 @@ AnonShield is an essential tool for organizations and individuals needing strict
 
 ## Getting Started
 
-### Option 1: Open Directly
+### Option 1: Use Online (Easiest)
+You can use the tool directly from your browser without downloading anything. Just visit:
+**[https://bytesairen.github.io/AnonShield/index.html](https://bytesairen.github.io/AnonShield/index.html)**
+
+### Option 2: Open Directly
 Simply open `index.html` in any modern browser (Chrome, Firefox, Edge, Safari). No installation, no build process, no dependencies to install.
 
 ```bash
@@ -107,7 +111,7 @@ open anonshield/index.html
 start anonshield/index.html
 ```
 
-### Option 2: Local Server (Recommended)
+### Option 3: Local Server (Recommended)
 For the best experience, serve the files via a local HTTP server:
 
 ```bash
@@ -124,7 +128,7 @@ php -S localhost:3000 -t anonshield
 
 Then navigate to `http://localhost:3000` in your browser.
 
-### Option 3: Host on Any Static Server
+### Option 4: Host on Any Static Server
 AnonShield is a set of static files. Deploy to GitHub Pages, Netlify, Vercel, or any web hosting — no backend required.
 
 ---

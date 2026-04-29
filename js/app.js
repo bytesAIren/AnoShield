@@ -62,6 +62,16 @@ window.Anonymizer = window.Anonymizer || {};
     // ─── Helpers ───
     let fileIdCounter = 0;
 
+    function escapeHtml(unsafe) {
+        if (!unsafe) return '';
+        return unsafe
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
     function generateFileId() {
         return `file-${++fileIdCounter}`;
     }
@@ -159,7 +169,7 @@ window.Anonymizer = window.Anonymizer || {};
         card.innerHTML = `
             <div class="file-card-icon ${iconClass}">${iconLabel}</div>
             <div class="file-card-info">
-                <div class="file-card-name" title="${entry.file.name}">${entry.file.name}</div>
+                <div class="file-card-name" title="${escapeHtml(entry.file.name)}">${escapeHtml(entry.file.name)}</div>
                 <div class="file-card-meta">
                     <span>${formatFileSize(entry.file.size)}</span>
                     <span class="file-card-pii">${piiHtml}</span>
@@ -209,7 +219,7 @@ window.Anonymizer = window.Anonymizer || {};
             card.innerHTML = `
                 <div class="result-icon success">✓</div>
                 <div class="result-info">
-                    <div class="result-name">${entry.file.name}</div>
+                    <div class="result-name">${escapeHtml(entry.file.name)}</div>
                     <div class="result-detail">${detCount} PII item(s) redacted</div>
                 </div>
                 <div class="result-actions">
@@ -226,7 +236,7 @@ window.Anonymizer = window.Anonymizer || {};
             card.innerHTML = `
                 <div class="result-icon error">✕</div>
                 <div class="result-info">
-                    <div class="result-name">${entry.file.name}</div>
+                    <div class="result-name">${escapeHtml(entry.file.name)}</div>
                     <div class="result-detail">Error: ${entry.error || 'Processing failed'}</div>
                 </div>
             `;
@@ -432,7 +442,7 @@ window.Anonymizer = window.Anonymizer || {};
         if (!entry || !entry.summary) return;
 
         const body = dom.scanResultsBody;
-        body.innerHTML = `<h4 style="margin-bottom: 12px; color: var(--text-primary);">${entry.file.name}</h4>`;
+        body.innerHTML = `<h4 style="margin-bottom: 12px; color: var(--text-primary);">${escapeHtml(entry.file.name)}</h4>`;
 
         if (Object.keys(entry.summary).length === 0) {
             body.innerHTML += '<p style="color: var(--text-muted);">No PII detected.</p>';
